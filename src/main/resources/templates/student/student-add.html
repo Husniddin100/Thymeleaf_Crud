@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input[type=text], input[type=number], select {
+            width: 100%;
+            padding: 10px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            border-radius: 5px;
+            background-color: #e4e4e4;
+            padding: 20px;
+            width: 50%;
+            margin: auto;
+        }
+
+        .button {
+            width: 100%;
+            background-color: #14c683;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .button:hover {
+            background-color: #22a06b;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align: center">Enter new Student</h1>
+<a th:href="@{/student/list}">Student List</a>
+<br>
+<div class="wrapper">
+    <form th:action="${isEdit} ? @{/student/edit/{studentId}(studentId=${student.id})} : @{/student/save}"
+
+          method="POST" th:object="${student}">
+        <label for="isim">Name</label>
+        <input type="text" th:field="${student.name}" id="isim" name="isim" placeholder="Ismingiz">
+
+        <label for="sharf">Surname</label>
+        <input type="text" th:field="${student.surname}" id="sharf" name="sharf" placeholder="Surname">
+
+        <label for="age">Age</label>
+        <input type="number" th:field="${student.age}" id="age" name="age" placeholder="Age">
+
+        <button type="submit" class="button" th:text="${isEdit} ? 'Update' : 'Save'"></button>
+
+    </form>
+</div>
+</body>
+</html>

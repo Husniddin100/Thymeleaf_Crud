@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Student</h1>
+<div th:if="${student != null}">
+<p><b>Name</b>: <span th:text="${student.name}"></span></p>
+<p><b>Surname</b>: <span th:text="${student.surname}"></span></p>
+<p><b>Age</b>: <span th:text="${student.age}"></span></p>
+<p><b>ID</b>: <span th:text="${student.id}"></span></p>
+
+</body>
+</html>
