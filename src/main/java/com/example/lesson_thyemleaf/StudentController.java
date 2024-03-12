@@ -4,24 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/student")
 public class StudentController {
     public List<StudentDTO> list = new LinkedList<>();
-
-    @GetMapping()
-    public String test(Model model) {
-        StudentDTO studentDTO = new StudentDTO();
-        studentDTO.setId(UUID.randomUUID().toString());
-        studentDTO.setName("Alish");
-        studentDTO.setSurname("Aliyev");
-        studentDTO.setAge(27);
-
-        model.addAttribute("student", studentDTO);
-        return "student/student-detail";
-    }
 
     public StudentController() {
         StudentDTO studentDTO = new StudentDTO();
@@ -46,6 +37,18 @@ public class StudentController {
         list.add(studentDTO);
     }
 
+    @GetMapping()
+    public String test(Model model) {
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setId(UUID.randomUUID().toString());
+        studentDTO.setName("Alish");
+        studentDTO.setSurname("Aliyev");
+        studentDTO.setAge(27);
+
+        model.addAttribute("student", studentDTO);
+        return "student/student-detail";
+    }
+
     @GetMapping("/list")
     public String list(Model model) {
         model.addAttribute("studentList", list);
@@ -55,14 +58,15 @@ public class StudentController {
     @GetMapping("/go-to-add")
     public String goToAdd(Model model) {
         model.addAttribute("student", new StudentDTO());
+        model.addAttribute("isEdit", false);
         return "student/student-add";
     }
+
 
     @PostMapping("/save")
     public String save(Model model, @ModelAttribute StudentDTO studentDTO) {
         studentDTO.setId(UUID.randomUUID().toString());
         list.add(studentDTO);
-
         return "redirect:/student/list";
     }
 
@@ -86,19 +90,9 @@ public class StudentController {
         }
         StudentDTO exist = optional.get();
         exist.setAge(studentDTO.getAge());
-        exist.setName(
-                studentDTO.getName());
+        exist.setName(studentDTO.getName());
         exist.setSurname(studentDTO.getSurname());
         return "redirect:/student/list";
     }
 
-    @PostMapping("/delete/{studentId}")
-    public String delete(Model model, @PathVariable String studentId) {
-        list.removeIf(student -> student.getId().equals(studentId));
-        if (list.isEmpty()) {
-            return "404";
-        }
-
-        return "redirect:/student/list";
-    }
 }

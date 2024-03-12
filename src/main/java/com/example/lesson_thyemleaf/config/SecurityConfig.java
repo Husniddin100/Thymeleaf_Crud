@@ -1,18 +1,24 @@
 package com.example.lesson_thyemleaf.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.UUID;
 
+@Configuration
 public class SecurityConfig {
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
+        // authentication
+//        String password = UUID.randomUUID().toString();
         System.out.println("User Pasword mazgi: 123456");
 
         UserDetails user = User.builder()
@@ -25,6 +31,7 @@ public class SecurityConfig {
         authenticationProvider.setUserDetailsService(new InMemoryUserDetailsManager(user));
         return authenticationProvider;
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,8 +46,24 @@ public class SecurityConfig {
                         httpSecurityFormLoginConfigurer
                                 .loginPage("/auth/go-to-loginPage")
                                 .loginProcessingUrl("/loginProcessUrl").permitAll()
-                                .defaultSuccessUrl("/student/list",true)
+                                .defaultSuccessUrl("/student/list", true)
+                                .failureUrl("/auth/go-to-loginPage?error=true")
+
+                )
+                .logout(httpSecurityLogoutConfigurer ->
+                                httpSecurityLogoutConfigurer
+                                .logoutUrl("/auth/go-to-logOutPage")
+//                                        .logoutUrl("/logOutProcessUrl").permitAll()
+                                        .logoutSuccessUrl("/greating")
                 );
+
+        /*http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
+                    authorizationManagerRequestMatcherRegistry
+                            .anyRequest()
+                            .authenticated();
+                }).formLogin(httpSecurityFormLoginConfigurer ->
+                httpSecurityFormLoginConfigurer.
+                );*/
         return http.build();
     }
 
