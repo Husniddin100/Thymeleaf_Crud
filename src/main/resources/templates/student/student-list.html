@@ -35,6 +35,7 @@
 <body>
 <h1 style="text-align: center">Student List</h1>
 <a th:href="@{/student/go-to-add}">Add Student</a>
+<a th:href="@{/auth/go-to-logOutPage}">Log out</a>
 <br>
 <table>
     <tr>
@@ -57,6 +58,10 @@
         </td>
     </tr>
 </table>
+<form th:action="@{/logout}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="submit">LOGOUT</input>
+</form>
 
 </body>
 </html>
