@@ -5,9 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Hello</h1>
-<p th:text="${current_time}">test</p>
 
-<div th:insert="fragments :: footer"></div>
+<footer th:fragment="footer">
+    <p>&copy; 2024 mazgi.uz</p>
+</footer>
+
 </body>
 </html>

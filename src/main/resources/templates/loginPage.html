@@ -79,7 +79,6 @@
 </head>
 <body>
 
-
 <div style="width: 50%; margin: auto">
     <h2>Login Form</h2>
     <form th:action="@{/loginProcessUrl}" method="post">
@@ -93,5 +92,6 @@
         </div>
     </form>
 </div>
+<div th:insert="fragments :: footer"></div>
 </body>
 </html>
