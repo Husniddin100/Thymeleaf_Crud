@@ -43,13 +43,15 @@ public class SecurityConfig {
     }
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // authorization
         http.authorizeHttpRequests()
                 .requestMatchers("/greating", "/time").permitAll()
                 .requestMatchers("/auth/*").permitAll()
+                .requestMatchers("/css/*").permitAll()
+                .requestMatchers("/bootstrap").permitAll()
+                .requestMatchers("/webjars/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -75,6 +77,7 @@ public class SecurityConfig {
                 );*/
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new PasswordEncoder() {

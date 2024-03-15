@@ -19,12 +19,9 @@ public class InitController {
         return "greating";
     }
 
-    @GetMapping("/time")
-    public ModelAndView greating() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("current_time", LocalDateTime.now());
-        modelAndView.setViewName("greating");
-        return modelAndView;
+    @GetMapping("/bootstrap")
+    public String goToBootsTrap() {
+        return "bootstrapPage";
     }
 
 }
